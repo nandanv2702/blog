@@ -11,6 +11,8 @@ The blog needs to have a specific theme: I think a good way to go about this wou
 2. What I'm excited to learn about
 3. Where I see this going in the future / the applications of full-stack development
 
+    > Overall theme: full-stack development, programming, and how thinking differently can help you come up with creative solutions to problems in industry / personal life
+
 ```js
 console.log("this is just here so there's a gap lol");
 ```
@@ -144,5 +146,18 @@ Here's a couple of ideas that I can write about
         - [ ] Adding login / other auth services to the whole app
 
         - [ ] trying to break what we just built - testing.
+
+
+9. [ ] Hosting a blog - how ridiculously ___easy___ it is: the process of making the Hugo blog
+
+10. [ ] Map, filter, reduce and why they're the sh*t
+
+11. [ ] Async-Await and Promises in JS
+
+12. [ ] What does it mean when someone says an app must "scale well" - what kind of architectural concerns does this actually talk about? Is it talking about the event-blocking nature of certain types of functions? What does it _really_ mean?
+
+13. [ ] NodeJS security conerns - because this topic scares me
+
+14. [ ] What exactly does `canonical_url` mean and how does it affect SEO?
 
 
