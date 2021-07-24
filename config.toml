@@ -1,6 +1,6 @@
 baseurl = "/"
 languageCode = "en-us"
-theme = "hello-friend"
+theme = "hugo-theme-hello-friend"
 title = "Nandan V"
 paginate = 5
 enableEmoji = true
