@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        How to Use Promise.All() in Javascript ::
+        Nandan V — Blog
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="The File System (fs) module in NodeJS can come quite handy, but did you know that the fs module can return Promises? This can make things much more logical when it comes to understanding asynchronous programming with reference to the local file system.
+Here&amp;rsquo;s The Problem As part of my project to create a real-time inventory dashboard at work, I needed to seed a SQL database hosted on Azure with data from a bunch of text files."
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="/posts/how-to-use-promises-all-in-javascript/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css" />
+
+<link rel="stylesheet" href="/style.css" />
+
+
+<link
+  rel="apple-touch-icon-precomposed"
+  sizes="144x144"
+  href="/img/apple-touch-icon-144-precomposed.png"
+/>
+<link rel="shortcut icon" href="/img/favicon.png" />
+
+
+<link href="/assets/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="How to Use Promise.All() in Javascript"/>
+<meta name="twitter:description" content="The File System (fs) module in NodeJS can come quite handy, but did you know that the fs module can return Promises? This can make things much more logical when it comes to understanding asynchronous programming with reference to the local file system.
+Here&rsquo;s The Problem As part of my project to create a real-time inventory dashboard at work, I needed to seed a SQL database hosted on Azure with data from a bunch of text files."/>
+
+
+
+<meta property="og:title" content="How to Use Promise.All() in Javascript" />
+<meta property="og:description" content="The File System (fs) module in NodeJS can come quite handy, but did you know that the fs module can return Promises? This can make things much more logical when it comes to understanding asynchronous programming with reference to the local file system.
+Here&rsquo;s The Problem As part of my project to create a real-time inventory dashboard at work, I needed to seed a SQL database hosted on Azure with data from a bunch of text files." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/how-to-use-promises-all-in-javascript/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-07-21T19:55:41-04:00" />
+<meta property="article:modified_time" content="2021-07-21T19:55:41-04:00" /><meta property="og:site_name" content="Nandan V" />
+
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >Nandan V</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/posts">Blog</a></li>
+        
+      
+        
+          <li><a href="https://nandanv.com">Website</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/posts">Blog</a></li>
+      
+    
+      
+        <li><a href="https://nandanv.com">Website</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title">How to Use Promise.All() in Javascript</h1>
+    <div class="post-meta">
+      
+        <span class="post-date">
+          2021-07-21
+        </span>
+
+        
+          
+            
+
+
+
+          
+        
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 6 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+
+    <div class="post-content">
+      
+        
+        <h2>Table of Contents</h2>
+        <aside class="table-of-contents"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#heres-the-problem">Here&rsquo;s The Problem</a></li>
+    <li><a href="#storytime">Storytime</a></li>
+    <li><a href="#the-asynchronous-nature-of-javascript">The Asynchronous Nature of Javascript</a></li>
+    <li><a href="#the-solution">The Solution</a>
+      <ul>
+        <li><a href="#step-1-get-a-list-of-files">Step 1: Get a List of Files</a></li>
+        <li><a href="#step-2-read-the-raw-data">Step 2: Read the Raw Data</a></li>
+        <li><a href="#step-3-format-the-data">Step 3: Format the Data</a></li>
+        <li><a href="#step-4-bulkcreate-data">Step 4: bulkCreate Data</a></li>
+      </ul>
+    </li>
+    <li><a href="#what-i-learned">What I Learned</a></li>
+  </ul>
+</nav></aside>
+        
+      
+      <p>The File System (<code>fs</code>) module in NodeJS can come quite handy, but did you know that the <code>fs</code> module can return Promises? This can make things much more logical when it comes to understanding asynchronous programming with reference to the local file system.</p>
+<h2 id="heres-the-problem">Here&rsquo;s The Problem</h2>
+<p>As part of my project to create a real-time inventory dashboard at work, I needed to seed a SQL database hosted on Azure with data from a bunch of text files. If there were just a couple of files, an easy way to do this would just be to copy paste all file content into one file and then read that file into the database. However, there are well over 50 files - and let&rsquo;s be honest, who has the brainpower to open and close all of these <em>manually</em>.</p>
+<p>So in order to successfully complete this task, my first thought was to create this &ldquo;simple&rdquo; workflow:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#75715e">// reads all files present in the test files directory
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">files</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">readdir</span>(<span style="color:#e6db74">&#34;./Documents/Test AOS Files&#34;</span>, (<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">files</span>) =&gt; {
+        <span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span><span style="color:#a6e22e">err</span>){
+            <span style="color:#75715e">// console.log(files)
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">files</span>
+        } <span style="color:#66d9ef">else</span> {
+            <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;fs read err&#34;</span>)
+        }
+    });
+
+<span style="color:#75715e">// read the contents of each file, append it to an array, then use the array to bulk insert the data into the SQL database
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">files</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">file</span> =&gt; {
+
+    <span style="color:#75715e">// array that holds all data
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">rawData</span> <span style="color:#f92672">=</span> [];
+
+    <span style="color:#75715e">// open file, read contents into object, insert into array
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">readFile</span>(<span style="color:#a6e22e">file</span>, <span style="color:#e6db74">&#39;utf8&#39;</span> , (<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">data</span>) =&gt; {
+        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">err</span>) {
+            <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>(<span style="color:#a6e22e">err</span>)
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>
+        }
+
+        <span style="color:#a6e22e">dataArray</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">toString</span>().<span style="color:#a6e22e">split</span>(<span style="color:#e6db74">/\r?\n/</span>);
+
+        <span style="color:#a6e22e">dataArray</span>.<span style="color:#a6e22e">forEach</span>(<span style="color:#a6e22e">data</span> =&gt; {
+            <span style="color:#a6e22e">rawData</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">split</span>(<span style="color:#e6db74">&#34;,&#34;</span>))
+        });
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">rawData</span>
+    });
+})
+.<span style="color:#a6e22e">then</span>((<span style="color:#a6e22e">rawData</span>) =&gt; {
+    <span style="color:#75715e">// bulk insert it using Sequelize
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">AOS</span>.<span style="color:#a6e22e">bulkCreate</span>(<span style="color:#a6e22e">rawData</span>).<span style="color:#a6e22e">then</span>((<span style="color:#a6e22e">res</span>) =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`res is: \n </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">res</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>))
+});
+
+</code></pre></div><p>It&rsquo;s a mouthful, yeah, but to anyone who&rsquo;s ever coded anything <em>ever</em> - if something looks like it&rsquo;s gonna work the first time, it&rsquo;s not.</p>
+<h2 id="storytime">Storytime</h2>
+<p>In order to better understand this problem, I like to frame it as a story:</p>
+<p>Think of yourself as a proctor at an exam. As soon as time&rsquo;s up, you <em><strong>expect</strong></em> papers on your desk. Realistically, you know that some students will turn in their papers after others do, so you decide to wait for all the papers to arrive; you really hate walking so this makes it easier for you to take all the completed papers to your office rather than walk to your office as each one comes in (which is inefficient anyway).</p>
+<p>If you understand how this works, you pretty much understand how <code>Promise.all()</code> works.</p>
+<p>In this case, <code>Promise.all()</code> is your professor, and your class' completed exam papers are the files - mind you, each &ldquo;paper&rdquo; might be submitted a couple of seconds later to the &ldquo;professor.&rdquo;</p>
+<h2 id="the-asynchronous-nature-of-javascript">The Asynchronous Nature of Javascript</h2>
+<p>What I didn&rsquo;t quite understand about the <code>fs</code> module earlier was how I could use <a href="https://nodejs.org/api/fs.html#fs_promise_example">Promise-based operations</a> rather than the <a href="https://nodejs.org/api/fs.html#fs_callback_example">callback form</a>. For those of you that are confused (like me) about what exactly a <code>Promise</code> is and what it does, here&rsquo;s a one-line summary of it:</p>
+<p>A <code>Promise</code> basically promises you an output - whether the task you&rsquo;re doing succeeds or fails, you will get an output <em>for sure</em>.</p>
+<h2 id="the-solution">The Solution</h2>
+<p>Because I had to push data to the database <strong>only once I had read all the files</strong>, I decided to import the fs module with the Promises API</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">fs</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;fs&#39;</span>).<span style="color:#a6e22e">promises</span>;
+</code></pre></div><p>This ensures that I am able to perform operations on the result only once an asynchronous operation is complete. Referring to the problem of reading multiple files once again, let&rsquo;s break down the problem into actionable steps:</p>
+<ol>
+<li>Get a list of files in the <code>Test AOS Files</code> directory</li>
+<li>Read the raw data from each file (<em>note: raw data refers to the .csv-like format of the file</em>) and add it to an array</li>
+<li>Format the data to adhere to the model required in the database; then, push it to a &ldquo;final data&rdquo; array</li>
+<li>Once all the information is available, use <code>bulkCreate</code> from <code>Sequelize</code> to bulk insert the data in the &ldquo;final data&rdquo; array</li>
+</ol>
+<h3 id="step-1-get-a-list-of-files">Step 1: Get a List of Files</h3>
+<p>This is as easy as</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">files</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">readdir</span>(<span style="color:#e6db74">&#34;./Documents/Test AOS Files&#34;</span>)
+</code></pre></div><p>Note that because <code>const fs</code> refers to the <code>promises</code> API from the <code>fs</code> module, we can chain <code>.then()</code> to <code>files</code>.</p>
+<p>As for the professor, think of this as a manifest of all the papers they&rsquo;re supposed to collect.</p>
+<h3 id="step-2-read-the-raw-data">Step 2: Read the Raw Data</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">files</span>
+    .<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">files</span> =&gt; {
+
+        <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">raw_data_list</span> <span style="color:#f92672">=</span> []
+
+        <span style="color:#a6e22e">files</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">file</span> =&gt; {
+
+            <span style="color:#75715e">// gets the raw data for each file and adds it to the raw data array
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">raw_data_list</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">getData</span>(<span style="color:#a6e22e">file</span>));
+
+        })
+        
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">raw_data_list</span>;
+    })
+    .<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">res</span> =&gt; {
+        <span style="color:#75715e">// do other stuff
+</span><span style="color:#75715e"></span>    })
+    .<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">err</span> =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">err</span>))
+</code></pre></div><p>By defining the <code>getData</code> function as shown below, we know that every element in <code>raw_data_list</code> is a Promise</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#75715e">// reads a file and returns its content
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getData</span>(<span style="color:#a6e22e">fileName</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">readFile</span>(<span style="color:#e6db74">&#34;./Documents/Test AOS Files/&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">fileName</span>, <span style="color:#e6db74">&#39;utf8&#39;</span>);
+};
+</code></pre></div><h3 id="step-3-format-the-data">Step 3: Format the Data</h3>
+<p>Once all the Promises are resolved, i.e., once all the papers are submitted, we can format the papers to be the way we like:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">files</span>
+    .<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">files</span> =&gt; <span style="color:#75715e">// step 2 code)
+</span><span style="color:#75715e"></span>    .<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">rawData</span> =&gt; {
+
+        <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">final_data_list</span> <span style="color:#f92672">=</span> [];
+
+        <span style="color:#75715e">// this will run only when all the papers are submitted
+</span><span style="color:#75715e"></span>        Promise.<span style="color:#a6e22e">all</span>(<span style="color:#a6e22e">rawData</span>).<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">data</span> =&gt; {
+
+            <span style="color:#75715e">// format the data by removing newline and return characters
+</span><span style="color:#75715e"></span>            <span style="color:#75715e">// each array contains contents of one file
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">formattedData</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">res</span> =&gt; <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">split</span>(<span style="color:#e6db74">/\r?\n/</span>));
+
+            <span style="color:#a6e22e">formattedData</span>.<span style="color:#a6e22e">forEach</span>(<span style="color:#a6e22e">dataArray</span> =&gt; {
+                <span style="color:#a6e22e">dataArray</span>.<span style="color:#a6e22e">forEach</span>(<span style="color:#a6e22e">data</span> =&gt; {
+
+                        <span style="color:#75715e">// format the data as required for the database (returns an object)
+</span><span style="color:#75715e"></span>
+                        <span style="color:#75715e">// add the formatted row as a Promise to use for the next step
+</span><span style="color:#75715e"></span>
+                        <span style="color:#a6e22e">final_data_list</span>.<span style="color:#a6e22e">push</span>(<span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">reject</span>) =&gt; <span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">row</span>)));
+                    };
+                });
+            });
+
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">final_data_list</span>;
+    })
+    .<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">res</span> =&gt; {
+        <span style="color:#75715e">// step 4
+</span><span style="color:#75715e"></span>    })
+</code></pre></div><h3 id="step-4-bulkcreate-data">Step 4: bulkCreate Data</h3>
+<p>Since we know that <code>final_data_list</code> is a list of Promises that will all resolve to formatted rows to work with, we can chain another <code>.then()</code> block to the code above in order to do that.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#75715e">// above code
+</span><span style="color:#75715e"></span>    .<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">res</span> =&gt; {
+        Promise.<span style="color:#a6e22e">all</span>(<span style="color:#a6e22e">res</span>)
+            .<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">data</span> =&gt; {
+                        <span style="color:#75715e">// add to DB
+</span><span style="color:#75715e"></span>                        <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">AOS</span>.<span style="color:#a6e22e">bulkCreate</span>(<span style="color:#a6e22e">data</span>)
+                            .<span style="color:#a6e22e">then</span>((<span style="color:#a6e22e">res</span>) =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`res is: \n </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">res</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>));
+                });
+    });
+</code></pre></div><p>After implementing all this code, it FINALLY worked. I shared it with a co-worker and YAY he was ecstatic too. I then jumped around for 2 mins and got back to work cuz my manager walked in.</p>
+<h2 id="what-i-learned">What I Learned</h2>
+<p>Phew, now that we&rsquo;re done with that huge chunk of code, let&rsquo;s take a little coffee break.</p>
+
+  <img src="coffee.jpg"  alt="Coffee"  class="center"  style="border-radius: 8px;"  />
+
+
+<p>Although all of this can seem quite cumbersome, it was important for me to understand how exactly the fs module worked. As any developer would, I console.logged the hell of out my inital buggy code until I got a basic idea of why it wasn&rsquo;t working. After basically getting a headache trying to figure out this simple task, I learned 3 things:</p>
+<ol>
+<li>
+<p>Promises are bæ</p>
+<p>seriously, it&rsquo;s amazing how useful these are especially considering how they don&rsquo;t block any other code (that&rsquo;s a whole other post in itself)</p>
+</li>
+<li>
+<p>Sometimes it&rsquo;s good to take a step back:</p>
+<p>This took me two days to complete (like 4 hours as it&rsquo;s part-time responsibility at work). When I didn&rsquo;t understand it the first day, I really wanted to stay back and solve it; however, the more I tried, the farther I got from the solution. So, I went back home, watched Suits (which is amazing by the way), came back the next day and <em>voila</em> - I typed and stuff just magically happened to work.</p>
+</li>
+<li>
+<p>Add validation to your database model</p>
+<p>I ended up inserting 2000 null rows and 2000 more rows with &ldquo;N/A&rdquo; into the DB - yeah, it&rsquo;s not as bad as deleting a table from the production DB but still. Should&rsquo;ve prolly done this earlier.</p>
+</li>
+</ol>
+
+    </div>
+    
+      
+    
+
+    
+      
+        
+
+      
+    
+  </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >Nandan V</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span
+          >© 2021 Powered by
+          <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span
+        >
+        <span
+          >Theme created by
+          <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span
+        >
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>
