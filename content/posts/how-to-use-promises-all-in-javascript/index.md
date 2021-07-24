@@ -1,7 +1,7 @@
 ---
 title: "How to Use Promise.All() in Javascript"
 date: 2021-07-21T19:55:41-04:00
-draft: true
+draft: false
 ---
 
 The File System (`fs`) module in NodeJS can come quite handy, but did you know that the `fs` module can return Promises? This can make things much more logical when it comes to understanding asynchronous programming with reference to the local file system.
