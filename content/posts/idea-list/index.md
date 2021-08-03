@@ -156,8 +156,12 @@ Here's a couple of ideas that I can write about
 
 12. [ ] What does it mean when someone says an app must "scale well" - what kind of architectural concerns does this actually talk about? Is it talking about the event-blocking nature of certain types of functions? What does it _really_ mean?
 
-13. [ ] NodeJS security conerns - because this topic scares me
+13. [ ] NodeJS security concerns - because this topic scares me
 
 14. [ ] What exactly does `canonical_url` mean and how does it affect SEO?
+
+15. [x] Using Promises in JS
+
+16. [x] Array / Object Destructuring
 
 
