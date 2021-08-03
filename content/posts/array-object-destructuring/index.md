@@ -1,7 +1,7 @@
 ---
 title: "Array & Object Destructuring"
 date: 2021-07-30T21:01:35-04:00
-draft: true
+draft: false
 ---
 
 This past week, I was tasked with creating an end-of-shift report summary report for all shifts throughout the year. To give you a little background, the company I work at records all automated production cart issues in an Excel file for archival purposes, and a co-worker and I thought it'd be useful to create a tool that helps others analyze which production stations have the most issues. 
