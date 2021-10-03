@@ -19,16 +19,16 @@ console.log("this is just here so there's a gap lol");
 
 Here's a couple of ideas that I can write about 
 
-1. [ ] Why you should learn a programming language
-    - [ ] How I started working at a new place and got my first internship / co-op
+1. [x] Why you should learn a programming language
+    - [x] How I started working at a new place and got my first internship / co-op
 
-    - [ ] The importance of patterns in our every day lives
+    - [x] The importance of patterns in our every day lives
 
-    - [ ] How every job has certain things that are repetitive
+    - [x] How every job has certain things that are repetitive
 
-    - [ ] How programming languages like Python can make things easier for you: include Python code for lecture video downloader from class + for video file creator
+    - [x] How programming languages like Python can make things easier for you: include Python code for lecture video downloader from class + for video file creator
 
-    - [ ] Simple use cases like this can help automate processes in the industry
+    - [x] Simple use cases like this can help automate processes in the industry
 
 
 2. [ ] Understanding the JavaScript Event Loop:
