@@ -61,3 +61,11 @@ certbot --certonly
 ### Renew a Certificate
 
 TODO: Insert Commands
+
+## Redirect HTTP to HTTPS
+
+Conventionally, we run HTTP on port 80 and HTTPS on port 443. The app I set up is quite simple and listens on port 80 and port 443, forwarding all port 80 requests (http) to port 443 (https). Here's the code that makes that happen 
+
+```js
+// some code here
+```
