@@ -155,11 +155,32 @@ Intense security stuff that's quite good. I highly recommend watching [this](htt
 openssl dhparam -outform PEM -out dhparam.pem 2048
 ```
 
-## Some Helpful Links
-- [DigiCert](https://www.digicert.com/kb/ssl-support/openssl-quick-reference-guide.htm)
-- [Blog with DNS Workaround](https://www.freecodecamp.org/news/how-to-get-https-working-on-your-local-development-environment-in-5-minutes-7af615770eec/)
-- [How to Add Certificate Authority in Chrome](https://ugetfix.com/ask/how-to-fix-this-site-is-not-secure-pop-up-with-an-error-code-dlg_flags_sec_cert_cn_invalid/)
-- [Pointing an IP address to Self-Signed Certificate](https://stackoverflow.com/questions/6793174/third-party-signed-ssl-certificate-for-localhost-or-127-0-0-1)
+## Setting Up a Basic HTTPS Server
+
+Assuming you followed the same directory structure from above, you can either clone my [https-demo](https://github.com/nandanv2702/https-demo) repo or copy the following code to run a basic HTTPS server.
+
+```js
+const https = require('https')
+const fs = require('fs')
+
+const options = {
+    ca: fs.readFileSync('./certs/rootCACert.pem'),
+    key: fs.readFileSync('./certs/server-key.pem'),
+    cert: fs.readFileSync('./certs/server-cer.pem'),
+    dhparam: fs.readFileSync('./certs/dhparam.pem'),
+    ecdhCurve: 'auto',
+    honorCipherOrder: true,
+}
+
+https.createServer(options, function (req, res) {
+    res.writeHead(200)
+    res.end('tls v1.3')
+}).listen(4555, "0.0.0.0", () => {
+    console.info(`Listening`)
+})
+```
+
+This can, of course, be configured with Express and other frameworks to generate dynamic web pages.
 
 ## Takeaways
 
@@ -168,3 +189,9 @@ openssl dhparam -outform PEM -out dhparam.pem 2048
 I've struggled with this for an exTREMELY long time now... it was only when I took some time away from the actual computer and confusing OpenSSL documentation (I swear, it's me - not them) that I understood how all this actually works. 
 
 Learning about what TLS actually is, the TLS handshake, TLSv1.2 vs TLSv1.3 - all this let me scratch the surface and learn more about how the web works. It's truly interesting stuff... watching the video I referred to earlier ([this](https://www.youtube.com/watch?v=AlE5X1NlHgg) one if you're lazy) helped me visually understand things. I find that this type of mixed-learning style really helps, especially in back-end stuff since you can't "see" the changes the same way you do in front-end development.
+
+## Some Helpful Links
+- [DigiCert](https://www.digicert.com/kb/ssl-support/openssl-quick-reference-guide.htm)
+- [Blog with DNS Workaround](https://www.freecodecamp.org/news/how-to-get-https-working-on-your-local-development-environment-in-5-minutes-7af615770eec/)
+- [How to Add Certificate Authority in Chrome](https://ugetfix.com/ask/how-to-fix-this-site-is-not-secure-pop-up-with-an-error-code-dlg_flags_sec_cert_cn_invalid/)
+- [Pointing an IP address to Self-Signed Certificate](https://stackoverflow.com/questions/6793174/third-party-signed-ssl-certificate-for-localhost-or-127-0-0-1)
