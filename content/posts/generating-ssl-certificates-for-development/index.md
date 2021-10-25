@@ -184,7 +184,7 @@ This can, of course, be configured with Express and other frameworks to generate
 
 ## Takeaways
 
-{{<image src="https://c.wallhere.com/photos/a1/1b/Mr_Robot_hackerman_hacking_Rami_Malek_Elliot_Mr_Robot-84340.png!d" style="width:100%; border-radius: 6px;" alt="Hackerman Rami Malek ftw">}}
+{{<image src="./mr-robot.png" style="width:100%; border-radius: 6px;" alt="Hackerman Rami Malek ftw">}}
 
 I've struggled with this for an exTREMELY long time now... it was only when I took some time away from the actual computer and confusing OpenSSL documentation (I swear, it's me - not them) that I understood how all this actually works. 
 
