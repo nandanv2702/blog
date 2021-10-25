@@ -56,7 +56,7 @@ This occurs because the Certificate Authority (aka you!) is not one that the bro
 
 When deploying our app / website, we need to use a different method; we need to obtain an SSL certificate from a trusted authority. This is where Let's Encrypt comes in.
 
-In the next blog post, I'll run through how to set up Let's Encrypt to show the :lock: on a website hosted on your public server.
+In the [next blog post](../lets-encrypt-a-simple-guide), I'll run through how to set up Let's Encrypt to show the :lock: on a website hosted on your public server.
 
 ## Helpful Resources
 - [How Does SSL/TLS Work?](https://security.stackexchange.com/questions/20803/how-does-ssl-tls-work/20833#20833)
